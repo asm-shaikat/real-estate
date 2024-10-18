@@ -53,7 +53,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <button className="btn btn-success text-white mr-2"><NavLink>Login</NavLink></button>
-        <button className="btn btn-info text-white"><NavLink>Register</NavLink></button>
+        <button className="btn btn-info text-white"><NavLink to="/register">Register</NavLink></button>
         
         <div className="dropdown dropdown-end">
           <div

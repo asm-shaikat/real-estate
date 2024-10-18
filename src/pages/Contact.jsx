@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const contact = () => {
+const Contact = () => {
     return (
         <div>
             <Helmet><title>Contact</title></Helmet>
@@ -10,4 +10,4 @@ const contact = () => {
     );
 };
 
-export default contact;
+export default Contact;

@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 import './index.css'
 import About from './pages/about.jsx';
-import Contact from './pages/Contact.jsx';
+import Contact from './pages/contact.jsx';
+import Register from './pages/Register.jsx';
+import AuthProvider from './Provider/AuthProvider.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,13 +17,19 @@ const router = createBrowserRouter([
     children:[
       { path: "/about", element: <About></About>},
       { path: "/contact", element: <Contact></Contact>},
-    ]
+    ],
   },
+  {
+    path: "register",
+    element: <Register></Register>
+  }
 ]);
 
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <AuthProvider>
+        <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
