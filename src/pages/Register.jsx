@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../Provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const { userRegister, updateRegisterUser } = useContext(UserContext);
@@ -13,6 +14,21 @@ const Register = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    const showTopRightAlert = (message) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: message,
+            toast: true,  
+            position: 'top-end',  
+            showConfirmButton: false,
+            timer: 3000,  
+            width: '350px',  
+            heightAuto: false,  
+            timerProgressBar: true, 
+        });
+    };
 
     const onSubmit = async (data) => {
         const { email, password, name, photo } = data;
@@ -26,7 +42,7 @@ const Register = () => {
             await updateRegisterUser(user, name, photoURL);
             navigate("/");
         } catch (error) {
-            console.error("Error registering user:", error.message);
+            showTopRightAlert("Failed to register user");
         }
     };
 
