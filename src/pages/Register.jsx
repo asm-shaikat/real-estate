@@ -120,7 +120,7 @@ const Register = () => {
 
                             {/* Submit Button */}
                             <div className="form-control mt-6">
-                                <button type="submit" className="btn btn-primary">
+                                <button type="submit" className="btn btn-primary text-white">
                                     Register
                                 </button>
                             </div>

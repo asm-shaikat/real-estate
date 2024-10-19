@@ -1,48 +1,65 @@
-// Login.js
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../Provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
-import auth from '../../firebase.config';
+import { NavLink, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    const { userLogin, googleLogin, facebookLogin } = useContext(UserContext);
+    const { userLogin, googleLogin, githubLogin } = useContext(UserContext);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = async (data) => {
+    const showTopRightAlert = (message) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: message,
+            toast: true,  
+            position: 'top-end',  
+            showConfirmButton: false,
+            timer: 3000,  
+            width: '350px',  
+            heightAuto: false,  
+            timerProgressBar: true, 
+        });
+    };
+
+    const onSubmit = (data) => {
         const { email, password } = data;
-        try {
-            // Email login
-            const userCredential = await userLogin(email, password);
-            console.log("Logged in successfully:", userCredential);
-            navigate("/");
-        } catch (error) {
-            console.error("Error logging in:", error.message);
-        }
+        // Email login
+        userLogin(email, password)
+            .then((userCredential) => {
+                console.log(userCredential);
+                navigate("/");
+            })
+            .catch((error) => {
+                showTopRightAlert("Invalid credentials");
+            });
     };
 
     // Handle Google login
-    const handleGoogleLogin = async () => {
-        try {
-            const result = await googleLogin();
-            console.log("Google login successful:", result);
-            navigate("/"); // Redirect on success
-        } catch (error) {
-            console.error("Error with Google login:", error.message);
-        }
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then((userCredential) => {
+                console.log("Google login successful:", userCredential);
+                navigate("/");
+            })
+            .catch((error) => {
+                showTopRightAlert("Failed to login through Google");
+            });
     };
 
-    // Handle Facebook login
-    const handleFacebookLogin = async () => {
-        try {
-            const result = await facebookLogin();
-            console.log("Facebook login successful:", result);
-            navigate("/"); 
-        } catch (error) {
-            console.error("Error with Facebook login:", error.message);
-        }
+    // Handle GitHub login
+    const handleGithubLogin = () => {
+        githubLogin()
+            .then((userCredential) => {
+                console.log("Github login successful:", userCredential);
+                navigate("/");
+            })
+            .catch((error) => {
+                showTopRightAlert("Failed to login through Github");
+            });
     };
 
     return (
@@ -54,6 +71,7 @@ const Login = () => {
                 <div className="card w-full max-w-sm shadow-2xl bg-base-100">
                     <div className="card-body">
                         <h2 className="text-center text-2xl font-bold">Login</h2>
+
                         <form onSubmit={handleSubmit(onSubmit)}>
                             {/* Email Input */}
                             <div className="form-control">
@@ -72,10 +90,13 @@ const Login = () => {
                                             message: "Invalid email address",
                                         },
                                     })}
+
                                 />
+
                                 {errors.email && (
                                     <p className="text-red-500 text-sm">{errors.email.message}</p>
                                 )}
+
                             </div>
 
                             {/* Password Input */}
@@ -121,13 +142,20 @@ const Login = () => {
                             Login with Google
                         </button>
 
-                        {/* Facebook Login Button */}
+                        {/* Github Login Button */}
                         <button
-                            onClick={handleFacebookLogin}
+                            onClick={handleGithubLogin}
                             className="btn btn-outline btn-primary w-full mt-2"
                         >
-                            Login with Facebook
+                            Login with GitHub
                         </button>
+
+                        <p>
+                            Don't have an account?{" "}
+                            <NavLink className="text-red-600 underline" to="/register">
+                                Create one
+                            </NavLink>
+                        </p>
                     </div>
                 </div>
             </div>
