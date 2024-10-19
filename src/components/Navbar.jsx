@@ -1,7 +1,36 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../Provider/AuthProvider";
+import { signOut } from "firebase/auth";
+import auth from '../../firebase.config';
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { loginUserInfo } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut(auth)
+          .then(() => {
+            Swal.fire("Logged Out!", "You have been logged out.", "success");
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+  
   const navList = (
     <>
       <li>
@@ -14,7 +43,7 @@ const Navbar = () => {
         <NavLink to="/contact">Contact</NavLink>
       </li>
     </>
-  );
+  );3
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -52,41 +81,54 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navList}</ul>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-success text-white mr-2"><NavLink>Login</NavLink></button>
-        <button className="btn btn-info text-white"><NavLink to="/register">Register</NavLink></button>
-        
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+      { 
+        !loginUserInfo ? (
+          <>
+            <NavLink to="/login">
+              <button className="btn btn-success text-white mr-2">Login</button>
+            </NavLink>
+            <NavLink to="/register">
+              <button className="btn btn-info text-white">Register</button>
+            </NavLink>
+          </>
+        ) : null
+      }
+
+        {
+          loginUserInfo &&
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <a onClick={handleLogout}>Logout</a>
+              </li>
+            </ul>
+          
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        
-        </div>
+        }
 
       </div>
     </div>
