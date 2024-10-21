@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../Provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Register = () => {
@@ -140,6 +140,7 @@ const Register = () => {
                                     Register
                                 </button>
                             </div>
+                            <NavLink className="underline text-cyan-400" to="/login">Already have an account? Login</NavLink>
                         </form>
                     </div>
                 </div>

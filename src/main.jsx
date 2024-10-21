@@ -12,11 +12,13 @@ import Register from './pages/Register.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
 import Login from './pages/Login.jsx';
 import Middleware from './middleware.jsx';
+import Home from './pages/Home.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Middleware><Root></Root></Middleware>,
     children:[
+      { path: "/", element:<Home></Home>},
       { path: "/about", element:<About></About>},
       { path: "/contact", element: <Contact></Contact>},
     ],

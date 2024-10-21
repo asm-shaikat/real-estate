@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../Provider/AuthProvider";
 import { signOut } from "firebase/auth";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const { loginUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -33,22 +34,24 @@ const Navbar = () => {
   
   const navList = (
     <>
-      <li>
+      <li className="block lg:inline-block">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
+      <li className="block lg:inline-block">
         <NavLink to="/about">About</NavLink>
       </li>
-      <li>
+      <li className="block lg:inline-block">
         <NavLink to="/contact">Contact</NavLink>
       </li>
     </>
-  );3
+  );
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
+        {/* Mobile Menu */}
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -63,26 +66,27 @@ const Navbar = () => {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </div>
+          </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
           >
-            {/* List */}
             {navList}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          {" "}
+        <a className="btn btn-ghost normal-case text-xl">
           <NavLink to="/">Skyline Homes</NavLink>
         </a>
       </div>
+
+    {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navList}</ul>
       </div>
+
+
       <div className="navbar-end">
-      { 
-        !loginUserInfo ? (
+        {!loginUserInfo ? (
           <>
             <NavLink to="/login">
               <button className="btn btn-success text-white mr-2">Login</button>
@@ -91,27 +95,24 @@ const Navbar = () => {
               <button className="btn btn-info text-white">Register</button>
             </NavLink>
           </>
-        ) : null
-      }
+        ) : null}
 
-        {
-          loginUserInfo &&
+        {loginUserInfo && (
           <div className="dropdown dropdown-end">
-            <div
+            <label
               tabIndex={0}
-              role="button"
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
+                  alt="User Avatar"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 />
               </div>
-            </div>
+            </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
             >
               <li>
                 <a className="justify-between">
@@ -126,10 +127,8 @@ const Navbar = () => {
                 <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
-          
           </div>
-        }
-
+        )}
       </div>
     </div>
   );
