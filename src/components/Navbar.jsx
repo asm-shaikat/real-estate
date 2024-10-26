@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../Provider/AuthProvider";
 import { signOut } from "firebase/auth";
@@ -74,9 +74,9 @@ const Navbar = () => {
             {navList}
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">
+        <p className="font-semibold text-xl">
           <NavLink to="/">Skyline Homes</NavLink>
-        </a>
+        </p>
       </div>
 
     {/* Desktop Menu */}
@@ -106,7 +106,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="User Avatar"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src="{loginUserInfo.photoURL ? loginUserInfo.photoURL : 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'}"
                 />
               </div>
             </label>
@@ -115,10 +115,10 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
             >
               <li>
-                <a className="justify-between">
+                <NavLink className="justify-between" to="/profile">
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </NavLink>
               </li>
               <li>
                 <a>Settings</a>

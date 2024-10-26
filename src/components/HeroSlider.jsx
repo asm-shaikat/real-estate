@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -11,12 +10,13 @@ import 'swiper/css/scrollbar';
 const HeroSlider = () => {
     const sliderImage = [
         {
-            src: '/public/assets/imageSlider/image-1.jpg',
-            alt: 'Image 1'
+          src: '/public/assets/imageSlider/image-2.jpg',
+          alt: 'Image 2'  
         },
         {
-            src: '/public/assets/imageSlider/image-2.jpg',
-            alt: 'Image 2'
+          src: '/public/assets/imageSlider/image-1.jpg',
+          alt: 'Image 1'
+          
         },
         {
             src: '/public/assets/imageSlider/image-3.jpg',
@@ -25,11 +25,11 @@ const HeroSlider = () => {
     ];
 
     return (
-      <div className="w-full px-4 lg:px-0"> {/* Centered and responsive padding */}
+      <div className="w-full px-4 lg:px-0"> 
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={30}  // Less space between slides
-          slidesPerView={1}  // Show one image at a time
+          spaceBetween={30}  
+          slidesPerView={1} 
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}

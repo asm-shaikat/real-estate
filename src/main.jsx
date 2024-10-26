@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import Root from './Template/Root.jsx';
 import {
@@ -13,12 +13,24 @@ import AuthProvider from './Provider/AuthProvider.jsx';
 import Login from './pages/Login.jsx';
 import Middleware from './middleware.jsx';
 import Home from './pages/Home.jsx';
+import EstateDetails from './components/EstateDetails/EstateDetails.jsx';
+import Profile from './pages/Profile.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Middleware><Root></Root></Middleware>,
     children:[
       { path: "/", element:<Home></Home>},
+      { path: "/profile", element:<Profile></Profile>},
+      {
+        path: '/estate/:Id',
+        element: <EstateDetails />,
+        loader: async ({ params }) => {
+          const response = await fetch('/Data.json');
+          const data = await response.json();
+          return data.find((estate) => estate.id.toString() === params.Id);
+        },
+      },
       { path: "/about", element:<About></About>},
       { path: "/contact", element: <Contact></Contact>},
     ],
