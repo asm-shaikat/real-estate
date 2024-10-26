@@ -10,17 +10,17 @@ import 'swiper/css/scrollbar';
 const HeroSlider = () => {
     const sliderImage = [
         {
-          src: '/public/assets/imageSlider/image-2.jpg',
+          src: 'https://i.ibb.co.com/jzy0hnn/luxury-real-estate.jpg',
           alt: 'Image 2'  
         },
         {
-          src: '/public/assets/imageSlider/image-1.jpg',
+          src: 'https://i.ibb.co.com/8s3yw3t/What-are-real-estate-comps.jpg',
           alt: 'Image 1'
           
         },
         {
-            src: '/public/assets/imageSlider/image-3.jpg',
-            alt: 'Image 3'
+          src: 'https://i.ibb.co.com/bWC80NT/2a65e333b3e450407ceb50e3653bf030-cc-ft-960.jpg',
+          alt: 'Image 3'
         }
     ];
 
