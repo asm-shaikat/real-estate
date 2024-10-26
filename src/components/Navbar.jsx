@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../Provider/AuthProvider";
 import { signOut } from "firebase/auth";
-import auth from '../../firebase.config';
+import auth from "../../firebase.config";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { loginUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -31,7 +31,7 @@ const Navbar = () => {
       }
     });
   };
-  
+
   const navList = (
     <>
       <li className="block lg:inline-block">
@@ -79,11 +79,10 @@ const Navbar = () => {
         </p>
       </div>
 
-    {/* Desktop Menu */}
+      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navList}</ul>
       </div>
-
 
       <div className="navbar-end">
         {!loginUserInfo ? (
@@ -99,14 +98,15 @@ const Navbar = () => {
 
         {loginUserInfo && (
           <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle avatar"
-            >
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
                   alt="User Avatar"
-                  src="{loginUserInfo.photoURL ? loginUserInfo.photoURL : 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'}"
+                  src={
+                    loginUserInfo.photoURL
+                      ? loginUserInfo.photoURL
+                      : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  }
                 />
               </div>
             </label>
